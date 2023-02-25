@@ -59,7 +59,7 @@ public class App {
                 throw (new ArithmeticException("El coseno del angulo no debe ser cero"));
             }
             if (angulo < 0 || angulo > Math.PI/2){
-                throw (new ArithmeticException("El angulo tiene que estar entre 0 y Pi/2"));
+                throw (new ArithmeticException("El angulo tiene que estar entre 0, Pi/2"));
             }
             if (angulo == Math.PI/2){
                 throw (new ArithmeticException("El angulo no puede ser PI/2"));
@@ -87,7 +87,14 @@ public class App {
 
     public static double calcular_Y_dado_T(final double y_ini, final double v_ini, final double angulo, final double g,
             final double t) {
-       return (double) 0;
+                if (t < 0){
+                    throw(new ArithmeticException("El tiempo debe de ser positivo"));
+                }
+                if (angulo < 0 || angulo > Math.PI/2){
+                    throw (new ArithmeticException("El angulo tiene que estar entre 0 y Pi/2"));
+                }
+                double altura = y_ini + v_ini*Math.sin(angulo)* t + (1 / 2.0) * g * t * t;
+       return altura;
     }
     /**
      * Calcula el valor que tendra Y para un determinado valor de X
@@ -140,7 +147,7 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
-        /
+        
         System.out.println("Este programa calcula si un tiro parabólico impacta en un muro o no");
         Scanner myObj = new Scanner(System.in);
 
@@ -158,8 +165,8 @@ public class App {
 
         boolean impacta = impacta_en_muro(0,0, v_ini, angulo, -9.8, posicion_x_muro, altura);
         
-        //double x =calcular_T_dado_X(0, 0, Math.PI, 0);
-        //System.out.println(x);
+        //double x =calcular_Y_dado_T(0+10, 26, Math.toRadians(40), -9.81, 3.41/2);
+       // System.out.println(x);
 
         //System.out.println((impacta?"Sí":"No")+" impacta en el muro");
     }
