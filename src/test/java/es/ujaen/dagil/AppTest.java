@@ -1,5 +1,6 @@
 package es.ujaen.dagil;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -81,7 +82,7 @@ public class AppTest {
         // Valores del angulo que no estén entre 0 y PI/2 deben lanzar una excepción
         // - Ejercicio: App.calcular_T_dado_X(0, 0, Math.PI, 0);
         try{
-            App.calcular_T_dado_X(0, 0, Math.PI/2, 0);
+            App.calcular_T_dado_X(0, 0, Math.PI, 0);
         } catch(Exception f){
             System.err.println("Calcular_T_dado_X : " + f.getMessage());
         }
@@ -109,12 +110,12 @@ public class AppTest {
         // Valores del angulo que no estén entre 0 y PI/2 deben lanzar una excepción
         // - Ejercicio: App.calcular_Y_dado_T(0, 0, Math.PI,-9.81, 0);
         try{
-            App.calcular_Y_dado_T(0, 0, Math.PI/2, 0, 0);
+            App.calcular_Y_dado_T(0, 0, Math.PI, 0, 0);
             fail();
         }catch (Exception f){
             System.err.println("Calcular_Y_dado_T : " + f.getMessage());
         }
-        
+
         // Valor de t igual a 0, debe devolver el mismo valor que x_ini;
         // hacemos un par de comprobaciones
         // - Ejercicio: assertEquals(10, App.calcular_Y_dado_T(10, 29, 0, -9.81, 0), 0);
@@ -138,17 +139,23 @@ public class AppTest {
     @Test
     public void calcular_Y_dado_X() {
         // - Ejercicio: Valores del angulo que no estén entre 0 y PI/2 deben lanzar una excepción
-        
+        try{
+            App.calcular_Y_dado_X(0, 0, 0, Math.PI, 0, 0);
+        } catch (Exception e){
+            System.err.println("calcular_Y_dado_X : " + e.getMessage());
+        }
         // - Ejercicio: Valor de x_fin igual a x, debe devolver el mismo valor que y_ini; hacemos un par de comprobaciones
-        
+        assertEquals(10, App.calcular_Y_dado_X(5, 10, 2, 0, 0, 5),0.1);
         // Según https://www.areaciencias.com/fisica/tiro-parabolico-formulas/
 
         // - Ejercicio: Para una velocidad de 26m/s, un ángulo de 40º, y x igual a 67.73/2, Y debe devolver 14.23m
-        
+        assertEquals(14.23, App.calcular_Y_dado_X(0, 0, 26, Math.toRadians(40), -9.8, 67.73/2),0.1);
         // - Ejercicio: Para una velocidad de 26m/s, un ángulo de 40º, y x igual a 67.73, Y debe devolver 0m
-        
+        assertEquals(14.23, App.calcular_Y_dado_X(0, 0, 26, Math.toRadians(40), -9.8, 67.73),0.1);
         // - Ejercicio: si en vez de partir desde Y=0, damos otro valor, debe incrementarse en dicho valor; hacemos un ejercicio partiendo de un valor positivo y otro de un valor negativo.
-    }
+        assertEquals(14.23, App.calcular_Y_dado_X(0, 10, 26, Math.toRadians(40), -9.8, 67.73),0.1);
+        
+    }  
 
 
     @Test
