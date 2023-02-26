@@ -118,7 +118,8 @@ public class App {
         if(angulo < 0 || angulo > Math.PI/2){
             throw (new ArithmeticException("El angulo debe de estar entre 0 y PI/2"));
         } 
-        double altura_f = y_ini + ((Math.sin(angulo)*v_ini)/(Math.cos(angulo)*v_ini))* (x_fin-x_ini) + (g/2) * (((x_fin - x_ini)/(Math.cos(angulo)*v_ini)) * ((x_fin - x_ini)/(Math.cos(angulo)*v_ini)));
+        double altura_f = y_ini + ((Math.sin(angulo)*v_ini)/(Math.cos(angulo)*v_ini))* (x_fin-x_ini) + 
+                          (g/2) * (((x_fin - x_ini)/(Math.cos(angulo)*v_ini)) * ((x_fin - x_ini)/(Math.cos(angulo)*v_ini)));
         return altura_f;
     }
 
@@ -141,7 +142,20 @@ public class App {
 
     public static boolean impacta_en_muro(final double x_ini, final double y_ini, final double v_ini, final double angulo, final double g,
             final double posicion_x_muro, final double altura_muro) {
-        return (boolean) false;
+        
+        if (angulo < 0 || angulo > Math.PI/2 ){
+            throw (new ArithmeticException("No puede ser un angulo que no este entre 0 y PI/2"));
+        }
+        boolean choca = false;
+        double altura_f = y_ini + ((Math.sin(angulo)*v_ini)/(Math.cos(angulo)*v_ini))* (posicion_x_muro-x_ini) + 
+                          (g/2) * (((posicion_x_muro - x_ini)/(Math.cos(angulo)*v_ini)) * ((posicion_x_muro - x_ini)/(Math.cos(angulo)*v_ini)));
+
+        if (altura_f > altura_muro || altura_f < 0){
+            choca = false;
+        } else if (altura_f <= altura_muro && altura_f >= 0){
+            choca = true;
+        }  
+        return choca;
     }
 
 
@@ -151,7 +165,7 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
-        /* 
+        
         System.out.println("Este programa calcula si un tiro parabólico impacta en un muro o no");
         Scanner myObj = new Scanner(System.in);
 
@@ -167,12 +181,9 @@ public class App {
         System.out.println("Introduce altura del muro:");
         double altura = myObj.nextDouble();
 
-        boolean impacta = impacta_en_muro(0,0, v_ini, angulo, -9.8, posicion_x_muro, altura);
-        */
-        double x =calcular_Y_dado_X(0, -10, 26, Math.toRadians(40), -9.8, 67.73/2);
-        System.out.println(x);
+        boolean impacta = impacta_en_muro(0,0,26,Math.toRadians(40),-9.8,33.865,13);
 
-        //System.out.println((impacta?"Sí":"No")+" impacta en el muro");
+        System.out.println((impacta?"Sí":"No")+" impacta en el muro");
     }
 
 

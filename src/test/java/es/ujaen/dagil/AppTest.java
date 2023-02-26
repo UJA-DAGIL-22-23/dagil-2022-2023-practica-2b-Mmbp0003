@@ -161,11 +161,17 @@ public class AppTest {
     @Test
     public void impacta_en_muro() {
         // - Ejercicio: Valores del angulo que no estén entre 0 y PI/2 deben lanzar una excepción
-        
+        try{
+            App.impacta_en_muro(0,0,0,Math.PI,0,0,0);
+        } catch (Exception e){
+            System.err.println("impacta_en_muro : " + e.getMessage());
+        }
         // Según https://www.areaciencias.com/fisica/tiro-parabolico-formulas/
 
         // Para una velocidad de 26m/s, un ángulo de 40º, y x igual a 67.73/2, Y debe devolver 14.23m. 
         // - Ejercicio: Por tanto valores mayores que 14.235772321882246 (prueba con 14.24 o mayores) deben devolver true y valores fuera de ese rango deben devolver false.
         // Hacemos al menos dos comprobaciones para true y otras dos para false.
+       assertTrue(App.impacta_en_muro(0,0,26,Math.toRadians(40),-9.8,67.73/2,15));
+       assertFalse(App.impacta_en_muro(0,0,26,Math.toRadians(40),-9.8,67.73/2,13));
     }
 }
