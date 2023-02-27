@@ -184,6 +184,7 @@ public class App {
         boolean impacta = impacta_en_muro(0,0,26,Math.toRadians(40),-9.8,33.865,13);
 
         System.out.println((impacta?"Sí":"No")+" impacta en el muro");
+        
     }
 
 
